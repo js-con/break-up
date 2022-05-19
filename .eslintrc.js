@@ -1,8 +1,9 @@
 module.exports = {
-  extends: ['prettier', '@antfu/eslint-config-react'],
+  extends: ['@antfu/eslint-config-react', 'prettier', 'plugin:prettier/recommended'],
   plugins: ['prettier'],
   rules: {
     'prettier/prettier': 2,
+    '@typescript-eslint/comma-dangle': 0,
   },
   env: {
     commonjs: true,
