@@ -1,11 +1,6 @@
 module.exports = {
-  extends: [
-    'prettier',
-    '@antfu/eslint-config-react',
-  ],
-  plugins: [
-    'prettier',
-  ],
+  extends: ['prettier', '@antfu/eslint-config-react'],
+  plugins: ['prettier'],
   rules: {
     'prettier/prettier': 2,
   },
