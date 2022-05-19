@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   "printWidth": 100, // 指定代码长度，超出换行
   "tabWidth": 2, // tab 键的宽度
   "useTabs": false, // 不使用tab
