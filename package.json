@@ -12,7 +12,9 @@
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.8.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-is": "^18.1.0",
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "@babel/core": "^7.17.12",
