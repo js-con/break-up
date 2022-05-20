@@ -68,32 +68,60 @@ export default function Scale(props: { scale: Question[] }) {
   const [forms, setForms] = React.useState<FormItem[]>(initScale(props.scale))
   const [page, setPage] = React.useState(0)
   const [question, setQuestion] = React.useState(forms[page])
+
   React.useEffect(() => {
     const { scale } = { ...props }
     setForms(initScale(scale))
   }, [props])
-  function onNext() {
-    if (page < forms.length - 1) {
-      setPage(page + 1)
-    }
-  }
-  function onPrev() {
-    if (page > 0) {
-      setPage(page - 1)
-    }
-  }
+
   React.useEffect(() => {
     if (forms[page]) {
       setQuestion(forms[page])
     }
   }, [page])
 
+  function onPrev() {
+    if (page > 0) {
+      setPage(page - 1)
+    }
+  }
+
+  function validate() {
+    if (question.options.every((item) => !item.checked)) {
+      alert('请选择答案')
+      return false
+    }
+    return true
+  }
+
+  function onNext() {
+    if (!validate()) {
+      return
+    }
+    if (page < forms.length - 1) {
+      setPage(page + 1)
+    }
+  }
+
+  function onSubmit() {
+    if (!validate()) {
+      return
+    }
+    alert('提交成功')
+  }
+
   return (
     <div>
       <Form question={question} />
       <footer>
-        <Button onClick={() => onPrev()}>上一题</Button>
-        <Button onClick={() => onNext()}>下一题</Button>
+        <Button onClick={() => onPrev()} disabled={page <= 0}>
+          上一题
+        </Button>
+        {page < forms.length - 1 ? (
+          <Button onClick={() => onNext()}>下一题</Button>
+        ) : (
+          <Button onClick={() => onSubmit()}>提交</Button>
+        )}
       </footer>
     </div>
   )
