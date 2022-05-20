@@ -1,12 +1,4 @@
 import * as React from 'react'
-import styled from 'styled-components'
-
-const Button = styled.button`
-  width: 84px;
-  height: 32px;
-  color: black;
-  border-radius: 8px;
-`
 
 export interface Question extends Record<string, unknown> {
   title: string
@@ -111,16 +103,16 @@ export default function Scale(props: { scale: Question[] }) {
   }
 
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center">
       <Form question={question} />
       <footer>
-        <Button onClick={() => onPrev()} disabled={page <= 0}>
+        <button onClick={() => onPrev()} disabled={page <= 0}>
           上一题
-        </Button>
+        </button>
         {page < forms.length - 1 ? (
-          <Button onClick={() => onNext()}>下一题</Button>
+          <button onClick={() => onNext()}>下一题</button>
         ) : (
-          <Button onClick={() => onSubmit()}>提交</Button>
+          <button onClick={() => onSubmit()}>提交</button>
         )}
       </footer>
     </div>

@@ -1,17 +1,6 @@
 import * as React from 'react'
-import styled from 'styled-components'
 import type { Question } from './Scale'
 import Scale from './Scale'
-
-const Root = styled.div`
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
 
 function App() {
   const scale: Question[] = [
@@ -29,9 +18,9 @@ function App() {
     },
   ]
   return (
-    <Root>
+    <div className=" h-screen w-screen flex justify-center items-center bg-dark-300">
       <Scale scale={scale} />
-    </Root>
+    </div>
   )
 }
 
