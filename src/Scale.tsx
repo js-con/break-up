@@ -17,24 +17,25 @@ export interface ScaleProps {
   scale: Question[]
 }
 
-const Radio: React.FC<{
-  checked: boolean
-}> = (props) => {
-  const checked = React.useState(props.checked)
-  return <input type="radio" checked={checked} onChange={() => handleChange} />
-}
-
 const Form: React.FC<{ question: Question }> = ({ question }) => {
-  const { title, options } = { ...question }
-  const list = options.map((option, index) => {
-    return {
-      text: option,
-      key: index,
-      checked: false,
-    }
-  })
-  const onChange = (item: any) => {
-    item.checked = true
+  const [title, setTitle] = React.useState('')
+  const [list, setList] = React.useState<any[]>([])
+  React.useEffect(() => {
+    const { options, title } = { ...question }
+    setList([...options.map((option, index) => ({ text: option, key: index, checked: false }))])
+    setTitle(title)
+  }, [question])
+  const handleChange = (index: number) => {
+    const newList = list.map((item, i) => {
+      if (i === index) {
+        item.checked = true
+      } else {
+        item.checked = false
+      }
+      return item
+    })
+
+    setList([...newList])
   }
   return (
     <div className="card">
@@ -42,7 +43,7 @@ const Form: React.FC<{ question: Question }> = ({ question }) => {
       {list.map((item) => (
         <div key={item.key}>
           <div>{item.text}</div>
-          <Radio></Radio>
+          <input type="radio" checked={item.checked} onChange={() => handleChange(item.key)} />
         </div>
       ))}
     </div>
