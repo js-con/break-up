@@ -12,8 +12,7 @@
     "@emotion/styled": "^11.8.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-is": "^18.1.0",
-    "styled-components": "^5.3.5"
+    "react-is": "^18.1.0"
   },
   "devDependencies": {
     "@antfu/eslint-config-react": "^0.23.1",
@@ -30,6 +29,8 @@
     "stylelint": "^14.8.2",
     "stylelint-config-prettier": "^9.0.3",
     "typescript": "^4.6.3",
-    "vite": "^2.9.9"
+    "vite": "^2.9.9",
+    "vite-plugin-windicss": "^1.8.4",
+    "windicss": "^3.5.4"
   }
 }
