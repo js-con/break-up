@@ -23,11 +23,10 @@ const Form: React.FC<{ question: FormItem }> = ({ question }) => {
   }, [question])
   const handleChange = (index: number) => {
     const newOptions = options.map((item, i) => {
-      if (i === index) {
+      if (i === index)
         item.checked = true
-      } else {
-        item.checked = false
-      }
+      else item.checked = false
+
       return item
     })
 
@@ -50,7 +49,7 @@ function initScale(scale: Question[]) {
   const list = scale.map((item, index) => {
     return {
       title: item.title,
-      options: item.options.map((i) => ({ text: i, checked: false })),
+      options: item.options.map(i => ({ text: i, checked: false })),
       key: index,
     }
   })
@@ -67,19 +66,17 @@ export default function Scale(props: { scale: Question[] }) {
   }, [props])
 
   React.useEffect(() => {
-    if (forms[page]) {
+    if (forms[page])
       setQuestion(forms[page])
-    }
   }, [page])
 
   function onPrev() {
-    if (page > 0) {
+    if (page > 0)
       setPage(page - 1)
-    }
   }
 
   function validate() {
-    if (question.options.every((item) => !item.checked)) {
+    if (question.options.every(item => !item.checked)) {
       alert('请选择答案')
       return false
     }
@@ -87,18 +84,17 @@ export default function Scale(props: { scale: Question[] }) {
   }
 
   function onNext() {
-    if (!validate()) {
+    if (!validate())
       return
-    }
-    if (page < forms.length - 1) {
+
+    if (page < forms.length - 1)
       setPage(page + 1)
-    }
   }
 
   function onSubmit() {
-    if (!validate()) {
+    if (!validate())
       return
-    }
+
     alert('提交成功')
   }
 
@@ -109,11 +105,13 @@ export default function Scale(props: { scale: Question[] }) {
         <button onClick={() => onPrev()} disabled={page <= 0}>
           上一题
         </button>
-        {page < forms.length - 1 ? (
+        {page < forms.length - 1
+          ? (
           <button onClick={() => onNext()}>下一题</button>
-        ) : (
+            )
+          : (
           <button onClick={() => onSubmit()}>提交</button>
-        )}
+            )}
       </footer>
     </div>
   )
