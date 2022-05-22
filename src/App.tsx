@@ -16,6 +16,36 @@ function App() {
       title: '测试问题3',
       options: ['选项1', '选项2', '选项3', '选项4'],
     },
+    {
+      title: '测试问题4',
+      options: ['选项1', '选项2', '选项3', '选项4'],
+    },
+    {
+      title: '测试问题5',
+      options: ['选项1', '选项2', '选项3', '选项4'],
+    },
+    {
+      title: '测试问题6',
+      options: ['选项1', '选项2', '选项3', '选项4'],
+
+    },
+    {
+      title: '测试问题7',
+      options: ['选项1', '选项2', '选项3', '选项4'],
+    },
+    {
+      title: '测试问题8',
+      options: ['选项1', '选项2', '选项3', '选项4'],
+
+    },
+    {
+      title: '测试问题9',
+      options: ['选项1', '选项2', '选项3', '选项4'],
+    },
+    {
+      title: '测试问题10',
+      options: ['选项1', '选项2', '选项3', '选项4'],
+    },
   ]
   return (
     <div className=" h-screen w-screen flex justify-center items-center bg-dark-300">
