@@ -47,17 +47,11 @@ function initScale(scale: Question[]) {
 export default function Scale(props: { scale: Question[] }) {
   const [forms, setForms] = React.useState(initScale(props.scale))
   const [page, setPage] = React.useState(0)
-  const [question, setQuestion] = React.useState(forms[page])
 
   React.useEffect(() => {
     const { scale } = { ...props }
     setForms(initScale(scale))
   }, [props])
-
-  React.useEffect(() => {
-    if (forms[page])
-      setQuestion(forms[page])
-  }, [page])
 
   function onPrev() {
     if (page > 0)
@@ -65,14 +59,21 @@ export default function Scale(props: { scale: Question[] }) {
   }
 
   const handleChange = (index: number) => {
-    const newOptions = question.options.map((item, idx) => {
+    const newOptions = forms[page].options.map((item, idx) => {
       item.checked = idx === index
       return item
     })
-    setQuestion({ ...question, options: newOptions })
+    const newQuestion = { ...forms[page], options: newOptions }
+    const newForms = forms.map((item, idx) => {
+      if (idx === page)
+        return newQuestion
+      else
+        return item
+    })
+    setForms(newForms)
   }
   function validate() {
-    if (question.options.every(item => !item.checked)) {
+    if (forms[page].options.every(item => !item.checked)) {
       alert('请选择答案')
       return false
     }
@@ -95,7 +96,7 @@ export default function Scale(props: { scale: Question[] }) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <Form question={question} handleChange={handleChange}/>
+      <Form question={forms[page]} handleChange={handleChange}/>
       <footer>
         <button onClick={() => onPrev()} disabled={page <= 0}>
           上一题
