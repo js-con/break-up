@@ -44,6 +44,17 @@ function initScale(scale: Question[]) {
   })
   return list
 }
+
+function initAnswer(scale: ReturnType<typeof initScale>) {
+  const Answer = scale.map((question) => {
+    return question.options.findIndex((option) => {
+      return option.checked === true
+    })
+  })
+
+  return Answer
+}
+
 export default function Scale(props: { scale: Question[] }) {
   const [forms, setForms] = React.useState(initScale(props.scale))
   const [page, setPage] = React.useState(0)
@@ -88,7 +99,8 @@ export default function Scale(props: { scale: Question[] }) {
   function onSubmit() {
     if (!validate())
       return
-    console.log(forms)
+    const answer = initAnswer(forms)
+    console.log(answer)
   }
 
   return (
