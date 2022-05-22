@@ -14,24 +14,13 @@ interface FormItem {
   key: number
 }
 
-const Form: React.FC<{ question: FormItem }> = ({ question }) => {
+const Form: React.FC<{ question: FormItem; handleChange: (i: number) => void }> = ({ question, handleChange }) => {
   const [title, setTitle] = React.useState('')
   const [options, setOptions] = React.useState<FormItem['options']>([])
   React.useEffect(() => {
     setOptions(question.options)
     setTitle(question.title)
   }, [question])
-  const handleChange = (index: number) => {
-    const newOptions = options.map((item, i) => {
-      if (i === index)
-        item.checked = true
-      else item.checked = false
-
-      return item
-    })
-
-    setOptions([...newOptions])
-  }
   return (
     <div className="card">
       <div className="card-title">{title}</div>
@@ -56,7 +45,7 @@ function initScale(scale: Question[]) {
   return list
 }
 export default function Scale(props: { scale: Question[] }) {
-  const [forms, setForms] = React.useState<FormItem[]>(initScale(props.scale))
+  const [forms, setForms] = React.useState(initScale(props.scale))
   const [page, setPage] = React.useState(0)
   const [question, setQuestion] = React.useState(forms[page])
 
@@ -75,6 +64,13 @@ export default function Scale(props: { scale: Question[] }) {
       setPage(page - 1)
   }
 
+  const handleChange = (index: number) => {
+    const newOptions = question.options.map((item, idx) => {
+      item.checked = idx === index
+      return item
+    })
+    setQuestion({ ...question, options: newOptions })
+  }
   function validate() {
     if (question.options.every(item => !item.checked)) {
       alert('请选择答案')
@@ -94,13 +90,12 @@ export default function Scale(props: { scale: Question[] }) {
   function onSubmit() {
     if (!validate())
       return
-
-    alert('提交成功')
+    console.log(forms)
   }
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <Form question={question} />
+      <Form question={question} handleChange={handleChange}/>
       <footer>
         <button onClick={() => onPrev()} disabled={page <= 0}>
           上一题
