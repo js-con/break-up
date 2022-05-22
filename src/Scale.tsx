@@ -59,16 +59,13 @@ export default function Scale(props: { scale: Question[] }) {
   }
 
   const handleChange = (index: number) => {
-    const newOptions = forms[page].options.map((item, idx) => {
-      item.checked = idx === index
-      return item
-    })
-    const newQuestion = { ...forms[page], options: newOptions }
     const newForms = forms.map((item, idx) => {
-      if (idx === page)
-        return newQuestion
-      else
-        return item
+      if (idx === page) {
+        item.options.forEach((option, key) => {
+          option.checked = key === index
+        })
+      }
+      return item
     })
     setForms(newForms)
   }
