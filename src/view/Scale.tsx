@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useLocation } from 'react-router-dom'
 
 export interface Question extends Record<string, unknown> {
   title: string
@@ -57,14 +58,16 @@ function initAnswer(scale: ReturnType<typeof initScale>) {
   return Answer
 }
 
-export default function Scale(props: { scale: Question[] }) {
-  const [forms, setForms] = React.useState(initScale(props.scale))
+export default function Scale() {
+  const location = useLocation()
+  const { question } = location.state as any
+  const [forms, setForms] = React.useState(initScale(question))
   const [page, setPage] = React.useState(0)
 
   React.useEffect(() => {
-    const { scale } = { ...props }
-    setForms(initScale(scale))
-  }, [props])
+    const { question } = location.state as any
+    setForms(initScale(question))
+  }, [location])
 
   function onPrev() {
     if (page > 0)
