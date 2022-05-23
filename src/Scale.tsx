@@ -36,15 +36,15 @@ const Form: React.FC<{ question: FormItem; handleChange: (i: number) => void }> 
   )
 }
 
-function initScale(scale: Question[]) {
-  const list = scale.map((item, index) => {
+function initScale(questions: Question[]) {
+  const scale = questions.map((item, index) => {
     return {
       title: item.title,
       options: item.options.map(i => ({ text: i, checked: false })),
       key: index,
     }
   })
-  return list
+  return scale
 }
 
 function initAnswer(scale: ReturnType<typeof initScale>) {
@@ -106,7 +106,7 @@ export default function Scale(props: { scale: Question[] }) {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center text-white">
       <Form question={forms[page]} handleChange={handleChange}/>
       <footer>
         <button onClick={() => onPrev()} disabled={page <= 0}>

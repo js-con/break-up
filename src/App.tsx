@@ -6,7 +6,7 @@ function App() {
   const scale: Question[] = [
     {
       title: '测试问题1',
-      options: ['选项1', '选项2', '选项3', '选项4'],
+      options: ['选项1', '选项2', '选项3', '选项4', '选项5'],
     },
     {
       title: '测试问题2',
