@@ -6,7 +6,7 @@ function App() {
   return (
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/scale:question" element={<Scale />}></Route>
+        <Route path="/scale" element={<Scale />}></Route>
       </Routes>
   )
 }
