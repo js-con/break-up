@@ -6,6 +6,7 @@ specifiers:
   '@babel/eslint-parser': ^7.17.0
   '@emotion/react': ^11.9.0
   '@emotion/styled': ^11.8.1
+  '@types/node': ^17.0.35
   '@types/react': ^18.0.0
   '@types/react-dom': ^18.0.0
   '@types/styled-components': ^5.1.25
@@ -15,6 +16,7 @@ specifiers:
   react: ^18.0.0
   react-dom: ^18.0.0
   react-is: ^18.1.0
+  react-router-dom: '6'
   typescript: ^4.6.3
   vite: ^2.9.9
   vite-plugin-windicss: ^1.8.4
@@ -26,11 +28,13 @@ dependencies:
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
   react-is: 18.1.0
+  react-router-dom: 6.3.0_ef5jwxihqo6n7gxfmzogljlgcm
 
 devDependencies:
   '@antfu/eslint-config-react': 0.23.1_hcfsmds2fshutdssjqluwm76uu
   '@babel/core': 7.17.12
   '@babel/eslint-parser': 7.17.0_fn4dzvyq7vsot3o3a6ksoqione
+  '@types/node': 17.0.35
   '@types/react': 18.0.9
   '@types/react-dom': 18.0.4
   '@types/styled-components': 5.1.25
@@ -619,6 +623,10 @@ packages:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
     dependencies:
       '@types/unist': 2.0.6
+    dev: true
+
+  /@types/node/17.0.35:
+    resolution: {integrity: sha512-vu1SrqBjbbZ3J6vwY17jBs8Sr/BKA+/a/WtjRG+whKg1iuLFOosq872EXS0eXWILdO36DHQQeku/ZcL6hz2fpg==}
     dev: true
 
   /@types/normalize-package-data/2.4.1:
@@ -2013,6 +2021,12 @@ packages:
     dependencies:
       function-bind: 1.1.1
 
+  /history/5.3.0:
+    resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==}
+    dependencies:
+      '@babel/runtime': 7.17.9
+    dev: false
+
   /hoist-non-react-statics/3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
     dependencies:
@@ -2638,6 +2652,27 @@ packages:
     resolution: {integrity: sha512-XP8A9BT0CpRBD+NYLLeIhld/RqG9+gktUjW1FkE+Vm7OCinbG1SshcK5tb9ls4kzvjZr9mOQc7HYgBngEyPAXg==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /react-router-dom/6.3.0_ef5jwxihqo6n7gxfmzogljlgcm:
+    resolution: {integrity: sha512-uaJj7LKytRxZNQV8+RbzJWnJ8K2nPsOOEuX7aQstlMZKQT0164C+X2w6bnkqU3sjtLvpd5ojrezAyfZ1+0sStw==}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      history: 5.3.0
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+      react-router: 6.3.0_react@18.1.0
+    dev: false
+
+  /react-router/6.3.0_react@18.1.0:
+    resolution: {integrity: sha512-7Wh1DzVQ+tlFjkeo+ujvjSqSJmkt1+8JO+T5xklPlgrh70y7ogx75ODRW0ThWhY7S+6yEDks8TYrtQe/aoboBQ==}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      history: 5.3.0
+      react: 18.1.0
+    dev: false
 
   /react/18.1.0:
     resolution: {integrity: sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ==}
