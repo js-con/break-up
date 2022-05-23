@@ -17,10 +17,12 @@ interface FormItem {
 const Form: React.FC<{ question: FormItem; handleChange: (i: number) => void }> = ({ question, handleChange }) => {
   const [title, setTitle] = React.useState('')
   const [options, setOptions] = React.useState<FormItem['options']>([])
+
   React.useEffect(() => {
     setOptions(question.options)
     setTitle(question.title)
   }, [question])
+
   return (
     <div className="card">
       <div className="card-title">{title}</div>
