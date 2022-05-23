@@ -25,11 +25,11 @@ const Form: React.FC<{ question: FormItem; handleChange: (i: number) => void }> 
   }, [question])
 
   return (
-    <div className="card">
-      <div className="card-title">{title}</div>
+    <div>
+      <div className="">{title}</div>
       {options.map((item, index) => (
-        <div key={index}>
-          <span>{item.text}</span>
+        <div key={index} className="flex justify-center items-center">
+          <span className="w-[10rem] text-left">{item.text}</span>
           <input type="radio" checked={item.checked} onChange={() => handleChange(index)} />
         </div>
       ))}

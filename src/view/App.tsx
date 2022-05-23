@@ -20,12 +20,15 @@ function Home() {
         <h2 className="my-[20px] text-[1.5rem]">请选择问题集</h2>
         <ul>
           {questions.map((q, i) => (
-            <li key={i} className="mt-[12px] p-[12px] bg-gray-400 text-black">
-              <div>
-                <p className="text-[1.5rem]">{q.name}</p>
-                <p className="mt-[4px]">{q.introduction}</p>
-                <Link to="/scale" state={{ question: q.questions }}>跳转</Link>
-              </div>
+            <li key={i} className="mt-[12px] bg-gray-400 text-black">
+                <Link
+                  to="/scale"
+                  state={{ question: q.questions }}
+                  className="block p-[12px] no-underline text-black"
+                >
+                  <p className="text-[1.5rem]">{q.name}</p>
+                  <p className="mt-[4px]">{q.introduction}</p>
+                </Link>
             </li>
           ))}
         </ul>
