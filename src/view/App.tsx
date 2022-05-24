@@ -1,10 +1,12 @@
+import { Card, List, ListItem, ListItemText } from '@mui/material'
 import React from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
 import questions from 'static/questions/test'
 import Scale from './Scale'
+
 function App() {
   return (
-    <div className=" h-screen w-screen flex justify-center items-center bg-dark-300 text-white text-center">
+    <div className="h-screen w-screen flex justify-center items-center text-center">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/scale" element={<Scale />}></Route>
@@ -18,20 +20,25 @@ function Home() {
       <div>
         <h1 className="text-[2.23rem]">欢迎使用break up!</h1>
         <h2 className="my-[20px] text-[1.5rem]">请选择问题集</h2>
-        <ul>
+        <List>
           {questions.map((q, i) => (
-            <li key={i} className="mt-[12px] bg-gray-400 text-black">
+            <ListItem key={i}>
+              <Card className="w-[100%]">
                 <Link
                   to="/scale"
                   state={{ question: q.questions }}
                   className="block p-[12px] no-underline text-black"
                 >
-                  <p className="text-[1.5rem]">{q.name}</p>
-                  <p className="mt-[4px]">{q.introduction}</p>
+                  <ListItemText
+                    primary={q.name}
+                    secondary={q.introduction}
+                    className="text-white"
+                  />
                 </Link>
-            </li>
+              </Card>
+            </ListItem>
           ))}
-        </ul>
+        </List>
       </div>
   )
 }
