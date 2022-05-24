@@ -1,5 +1,4 @@
 import { Card, List, ListItem, ListItemText } from '@mui/material'
-import React from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
 import questions from 'static/questions/test'
 import Scale from './Scale'

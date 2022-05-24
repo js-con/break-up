@@ -6,13 +6,16 @@ import App from './view/App'
 import './style/index.css'
 import 'virtual:windi.css'
 import theme from './style/theme'
+import ToastProvider from './components/Toast'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <React.StrictMode>
         <BrowserRouter>
-          <App />
+          <ToastProvider>
+            <App />
+          </ToastProvider>
         </BrowserRouter>
       </React.StrictMode>,
     </ThemeProvider>,

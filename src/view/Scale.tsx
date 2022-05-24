@@ -1,5 +1,8 @@
 import * as React from 'react'
 import { useLocation } from 'react-router-dom'
+import Button from '@mui/material/Button'
+import { Alert, FormControl, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Snackbar } from '@mui/material'
+import { useToasts } from '../components/Toast'
 
 export interface Question extends Record<string, unknown> {
   title: string
@@ -25,15 +28,20 @@ const Form: React.FC<{ question: FormItem; handleChange: (i: number) => void }> 
   }, [question])
 
   return (
-    <div>
-      <div className="">{title}</div>
-      {options.map((item, index) => (
-        <div key={index} className="flex justify-center items-center">
-          <span className="w-[10rem] text-left">{item.text}</span>
-          <input type="radio" checked={item.checked} onChange={() => handleChange(index)} />
-        </div>
-      ))}
-    </div>
+    <FormControl>
+      <FormLabel className="mb-[8px] p-[8px] text-[1.5rem] leading-normal">{title}</FormLabel>
+      <RadioGroup>
+        {options.map((item, index) => (
+          <FormControlLabel
+            key={index}
+            control={
+              <Radio checked={item.checked} onChange={() => handleChange(index)} />
+            }
+            label={item.text}
+          />
+        ))}
+      </RadioGroup>
+    </FormControl>
   )
 }
 
@@ -63,6 +71,7 @@ export default function Scale() {
   const { question } = location.state as any
   const [forms, setForms] = React.useState(initScale(question))
   const [page, setPage] = React.useState(0)
+  const toast = useToasts()
 
   React.useEffect(() => {
     const { question } = location.state as any
@@ -87,7 +96,7 @@ export default function Scale() {
   }
   function validate() {
     if (forms[page].options.every(item => !item.checked)) {
-      alert('请选择答案')
+      toast.error('请选择回答')
       return false
     }
     return true
@@ -109,20 +118,27 @@ export default function Scale() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center text-white">
-      <Form question={forms[page]} handleChange={handleChange}/>
-      <footer>
-        <button onClick={() => onPrev()} disabled={page <= 0}>
-          上一题
-        </button>
-        {page < forms.length - 1
-          ? (
-          <button onClick={() => onNext()}>下一题</button>
-            )
-          : (
-          <button onClick={() => onSubmit()}>提交</button>
-            )}
-      </footer>
-    </div>
+    <>
+      <Paper className="p-[16px] w-[80%] flex flex-col justify-center items-center">
+        <Form question={forms[page]} handleChange={handleChange}/>
+        <footer className="mt-[20px] w-[80%] flex justify-around">
+          <Button
+            onClick={() => onPrev()}
+            disabled={page <= 0}
+            variant="contained"
+          >
+            上一题
+          </Button>
+          {page < forms.length - 1
+            ? (
+            <Button onClick={() => onNext()} variant="contained">下一题</Button>
+              )
+            : (
+            <Button onClick={() => onSubmit()} variant="contained">提交</Button>
+              )}
+        </footer>
+      </Paper>
+    </>
+
   )
 }
