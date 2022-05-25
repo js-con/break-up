@@ -1,15 +1,14 @@
 import { Alert, Snackbar } from '@mui/material'
 import * as React from 'react'
 
+const toastType = ['error', 'success', 'info', 'warning'] as const
 interface Toast {
   type: 'error' | 'success' | 'warning' | 'info'
   text: string
+  open: boolean
 }
-interface UseToast {
-  error: (text: string) => void
-  warning: (text: string) => void
-  success: (text: string) => void
-  info: (text: string) => void
+type UseToast = {
+  [K in (typeof toastType[number])]: (text: string) => void
 }
 
 const Ctx = React.createContext<UseToast>({
@@ -19,28 +18,48 @@ const Ctx = React.createContext<UseToast>({
   info: () => {},
 })
 
+const Snack: React.FC<Toast> = React.memo(
+  (toast) => {
+    return (
+    <>
+      {
+        <Snackbar open={toast.open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} >
+          <Alert severity={toast.type}>{toast.text}</Alert>
+        </Snackbar>
+      }
+    </>
+    )
+  },
+)
+Snack.displayName = 'Snack'
 export default function ToastProvider({ children }: any) {
   const [toasts, setToasts] = React.useState<Toast[]>([])
 
-  function showToast(toast: Toast) {
-    setToasts([...toasts, toast])
+  function hideToast(target: Toast) {
+    const newToasts = toasts.map((toast) => {
+      if (toast === target)
+        toast.open = false
+      return toast
+    })
+    setToasts([...newToasts])
   }
 
-  const toastType = ['error', 'success', 'info', 'warning'] as const
-  const toast = toastType.reduce((acc: any, cur) => {
+  const toastProvider = toastType.reduce((acc: any, cur) => {
     acc[cur] = function (text: string) {
-      showToast({ type: cur, text })
+      const newToast = { type: cur, text, open: true }
+      setToasts([...toasts, newToast])
+      setTimeout(() => {
+        hideToast(newToast)
+      }, 2000)
     }
     return acc
   }, {})
 
   return (
-    <Ctx.Provider value={ toast }>
+    <Ctx.Provider value={ toastProvider } >
       {
         toasts.map((toast, index) => (
-          <Snackbar open={true} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} key={index}>
-            <Alert severity={toast.type}>{toast.text}</Alert>
-          </Snackbar>
+            <Snack {...toast} key={index}/>
         ))
       }
       { children }
