@@ -18,9 +18,8 @@ const Ctx = React.createContext<UseToast>({
   info: () => {},
 })
 
-const Snack: React.FC<Toast> = React.memo(
-  (toast) => {
-    return (
+const Snack: React.FC<Toast> = (toast) => {
+  return (
     <>
       {
         <Snackbar open={toast.open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} >
@@ -28,10 +27,9 @@ const Snack: React.FC<Toast> = React.memo(
         </Snackbar>
       }
     </>
-    )
-  },
-)
-Snack.displayName = 'Snack'
+  )
+}
+
 export default function ToastProvider({ children }: any) {
   const [toasts, setToasts] = React.useState<Toast[]>([])
 
