@@ -18,28 +18,17 @@ const Ctx = React.createContext<UseToast>({
   info: () => {},
 })
 
-const Snack: React.FC<Toast> = (toast) => {
-  return (
-    <>
-      {
-        <Snackbar open={toast.open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} >
-          <Alert severity={toast.type}>{toast.text}</Alert>
-        </Snackbar>
-      }
-    </>
-  )
-}
-
 export default function ToastProvider({ children }: any) {
   const [toasts, setToasts] = React.useState<Toast[]>([])
 
   function hideToast(target: Toast) {
+    console.log(1)
     const newToasts = toasts.map((toast) => {
-      if (toast === target)
+      if (target === toast)
         toast.open = false
       return toast
     })
-    setToasts([...newToasts])
+    setToasts(newToasts)
   }
 
   const toastProvider = toastType.reduce((acc: any, cur) => {
@@ -57,7 +46,9 @@ export default function ToastProvider({ children }: any) {
     <Ctx.Provider value={ toastProvider } >
       {
         toasts.map((toast, index) => (
-            <Snack {...toast} key={index}/>
+          <Snackbar open={toast.open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} key={index} >
+            <Alert severity={toast.type}>{toast.text}</Alert>
+          </Snackbar>
         ))
       }
       { children }
