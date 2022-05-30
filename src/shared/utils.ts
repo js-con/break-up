@@ -1,5 +1,7 @@
 import { AES, enc } from 'crypto-js'
 
+export function noop() {}
+
 export function AESencrypt(message: string) {
   const result = AES.encrypt(message, 'lolicon')
   return result.toString()
