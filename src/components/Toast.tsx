@@ -27,24 +27,21 @@ export default function ToastProvider({ children }: any) {
     toastsRef.current = toasts
   },[toasts])
 
-  function hideToast(target: Toast) {
+  function hideToast() {
     toastsRef.current.shift()
-    // const newToasts = toastsRef.current.map((toast) => {
-    //   if (target === toast)
-    //     toast.open = false
-    //   return toast
-    // })
-    console.log(toastsRef.current)
     setToasts([...toastsRef.current])
   }
 
   const toastProvider = toastType.reduce((acc: any, cur) => {
     acc[cur] = function (text: string) {
       const newToast = { type: cur, text, open: true,id: toastsRef.current.length} 
+      if(toastsRef.current.length >= 5){
+        return
+      }      
       setToasts([...toasts, newToast])
       setTimeout(() => {
-        hideToast(newToast)
-      }, 1000)
+        hideToast()
+      }, 2000) 
     }
     return acc
   }, {})
