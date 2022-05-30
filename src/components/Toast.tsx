@@ -29,7 +29,15 @@ export default function ToastProvider({ children }: any) {
 
   function hideToast() {
     toastsRef.current.shift()
+    resetPosition()
     setToasts([...toastsRef.current])
+  }
+
+  function resetPosition(){
+    toastsRef.current = toastsRef.current.map((toast,index)=>{
+      toast.id = index
+      return toast
+    })
   }
 
   const toastProvider = toastType.reduce((acc: any, cur) => {
@@ -50,7 +58,12 @@ export default function ToastProvider({ children }: any) {
     <Ctx.Provider value={ toastProvider } >
       {
         toasts.map((toast, index) => (
-        <Snackbar open={toast.open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} style={{top:`${toast.id*5}%`}} key={index} >
+          <Snackbar 
+            open={toast.open} 
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }} 
+            style={{top:`${toast.id*5}%`,transition:'top 0.2s ease'}} 
+            key={index}
+          >
             <Alert severity={toast.type}>{toast.text}</Alert>
           </Snackbar>
         ))
