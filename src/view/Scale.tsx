@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import { Alert, FormControl, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Snackbar } from '@mui/material'
 import { useToasts } from '../components/Toast'
+import { AESencrypt } from '../shared/utils'
 
 export interface Question extends Record<string, unknown> {
   title: string
@@ -29,7 +30,7 @@ const Form: React.FC<{ question: FormItem; handleChange: (i: number) => void }> 
 
   return (
     <FormControl>
-      <FormLabel className="mb-[8px] p-[8px] text-[1.5rem] leading-normal">{title}</FormLabel>
+      <div className="mb-[8px] p-[8px] text-[1.5rem] leading-normal">{title}</div>
       <RadioGroup>
         {options.map((item, index) => (
           <FormControlLabel
@@ -113,7 +114,7 @@ export default function Scale() {
   function onSubmit() {
     if (!validate())
       return
-    const answer = initAnswer(forms)
+    const answer = AESencrypt(initAnswer(forms).join(''))  
     console.log(answer)
   }
 
