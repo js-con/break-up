@@ -2,7 +2,7 @@ import type { ScaleForm } from '../../src/components/Scales/types'
 
 export const socialMedia: ScaleForm = {
   type: 'ordinal',
-  form: [
+  content: [
     {
       title: 'What\'s your opinion on the new Facebook?',
       degrees: [
@@ -89,7 +89,7 @@ export const socialMedia: ScaleForm = {
 
 export const diet: ScaleForm = {
   type: 'nominal',
-  form: [
+  content: [
     {
       title: 'what is your favorate food?',
       options: [

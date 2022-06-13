@@ -1,17 +1,17 @@
 // 量表类型：标准、序数、区间、比例
 // type ScaleType = 'nominal' | 'ordinal' | 'interval' | 'ratio'
 
-interface NominalScale {
+export interface NominalScale {
   type: 'nominal'
-  form: {
+  content: {
     title: string
     options: string[]
   }[]
 }
 
-interface OrdinalScale {
+export interface OrdinalScale {
   type: 'ordinal'
-  form: {
+  content: {
     title: string
     degrees: string[]
   }[]
