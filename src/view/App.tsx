@@ -25,7 +25,7 @@ function Home() {
               <Card className="w-[100%]">
                 <Link
                   to="/scale"
-                  state={{ question: q.questions }}
+                  state={{ form: q.questions }}
                   className="block p-[12px] no-underline text-black"
                 >
                   <ListItemText
