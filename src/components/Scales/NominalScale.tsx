@@ -8,7 +8,7 @@ const Nominal: React.FC<{ content: ScaleContentMember; checked: number; handleCh
   const [title, setTitle] = React.useState('')
   const [radios, setRadios] = React.useState<ReturnType<typeof createRadios>>([])
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     setTitle(content.title)
     setRadios(createRadios(content.options))
   }, [content])
