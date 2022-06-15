@@ -8,12 +8,13 @@ import Nominal from '../components/Scales/NominalScale'
 import Ordinal from '../components/Scales/OrdinalScale'
 
 const Scale: React.FC = () => {
+  const toast = useToasts()
   const location = useLocation()
   const { form } = location.state as { form: ScaleForm }
 
   const [pageNo, setPageNo] = React.useState(0)
   const [curPage, setCurPage] = React.useState<any>(form.content[pageNo])
-  const toast = useToasts()
+  const [ans, setAns] = React.useState(new Array(form.content.length).fill(undefined))
 
   React.useEffect(() => {
     setCurPage(form.content[pageNo])
@@ -22,10 +23,19 @@ const Scale: React.FC = () => {
   function Content() {
     switch (form.type) {
       case 'nominal':
-        return <Nominal content={curPage}/>
+        return <Nominal content={curPage} checked={ans[pageNo]} handleChange={handleChange}/>
       case 'ordinal':
         return <Ordinal content={curPage}/>
     }
+  }
+
+  function handleChange(key: number) {
+    const newAns = ans.map((item, index) => {
+      if (index === pageNo)
+        item = key
+      return item
+    })
+    setAns(newAns)
   }
 
   function onPrev() {

@@ -4,7 +4,7 @@ import type { NominalScale } from './types'
 
 type ScaleContentMember = NominalScale['content'][number]
 
-const Nominal: React.FC<{ content: ScaleContentMember }> = ({ content }) => {
+const Nominal: React.FC<{ content: ScaleContentMember; checked: number; handleChange: Function }> = ({ content, checked, handleChange }) => {
   const [title, setTitle] = React.useState('')
   const [radios, setRadios] = React.useState<ReturnType<typeof createRadios>>([])
 
@@ -14,21 +14,13 @@ const Nominal: React.FC<{ content: ScaleContentMember }> = ({ content }) => {
   }, [content])
 
   function createRadios(options: ScaleContentMember['options']) {
-    return options.map((text, key) => ({
-      key,
-      text,
-      checked: false,
-    }))
-  }
-
-  function handleChange(key: number) {
-    const newRadios = radios.map((item) => {
-      item.checked = false
-      if (item.key === key)
-        item.checked = true
-      return item
+    return options.map((text, key) => {
+      return {
+        key,
+        text,
+        checked: !!(checked !== undefined && checked === key),
+      }
     })
-    setRadios(newRadios)
   }
 
   return (
