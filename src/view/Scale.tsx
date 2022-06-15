@@ -11,8 +11,8 @@ const Scale: React.FC = () => {
   const location = useLocation()
   const { form } = location.state as { form: ScaleForm }
 
-  const [curPage, setCurPage] = React.useState<any>()
   const [pageNo, setPageNo] = React.useState(0)
+  const [curPage, setCurPage] = React.useState<any>(form.content[pageNo])
   const toast = useToasts()
 
   React.useEffect(() => {
