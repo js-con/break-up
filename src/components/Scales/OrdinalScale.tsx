@@ -1,10 +1,11 @@
 import * as React from 'react'
 import type { OrdinalScale } from './types'
 
-const Ordinal: React.FC<{ scale: OrdinalScale }> = ({ scale }) => {
+type ScaleContentMember = OrdinalScale['content'][number]
+const Ordinal: React.FC<{ content: ScaleContentMember }> = ({ content }) => {
   return (
     <div>
-      {JSON.stringify(scale)}
+      {JSON.stringify(content)}
     </div>
   )
 }

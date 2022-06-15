@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { useLocation } from 'react-router-dom'
 import { Paper } from '@mui/material'
+import Button from '@mui/material/Button'
+import { useToasts } from '../Toast'
 import type { ScaleForm } from './types'
 import Nominal from './NominalScale'
 import Ordinal from './OrdinalScale'
@@ -9,16 +11,55 @@ const Scale: React.FC = () => {
   const location = useLocation()
   const { form } = location.state as { form: ScaleForm }
 
+  const [curPage, setCurPage] = React.useState<any>()
+  const [pageNo, setPageNo] = React.useState(0)
+  const toast = useToasts()
+
+  React.useEffect(() => {
+    setCurPage(form.content[pageNo])
+  }, [form, pageNo])
+
+  function Content() {
+    switch (form.type) {
+      case 'nominal':
+        return <Nominal content={curPage}/>
+      case 'ordinal':
+        return <Ordinal content={curPage}/>
+    }
+  }
+
+  function onPrev() {
+    setPageNo(pageNo - 1)
+  }
+
+  function onNext() {
+    setPageNo(pageNo + 1)
+  }
+
+  function onSubmit() {
+    toast.success('success')
+  }
+
   return (
     <>
       <Paper className="p-[16px] w-[80%] flex flex-col justify-center items-center">
-        {
-          form.type === 'nominal'
-            ? <Nominal scale={form}/>
-            : form.type === 'ordinal'
-              ? <Ordinal scale={form}/>
-              : ''
-        }
+         <Content />
+        <footer className="mt-[20px] w-[80%] flex justify-around">
+          <Button
+            onClick={() => onPrev()}
+            disabled={pageNo <= 0}
+            variant="contained"
+          >
+            上一题
+          </Button>
+          {pageNo < form.content.length - 1
+            ? (
+            <Button onClick={() => onNext()} variant="contained">下一题</Button>
+              )
+            : (
+            <Button onClick={() => onSubmit()} variant="contained">提交</Button>
+              )}
+        </footer>
       </Paper>
     </>
   )

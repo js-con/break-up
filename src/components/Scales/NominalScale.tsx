@@ -1,50 +1,41 @@
 import * as React from 'react'
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
-import Button from '@mui/material/Button'
 import type { NominalScale } from './types'
 
-const Nominal: React.FC<{ scale: NominalScale }> = ({ scale }) => {
-  const [title, setTitle] = React.useState('')
-  const [options, setOptions] = React.useState([])
-  const [page, setPage] = React.useState(0)
+type ScaleContentMember = NominalScale['content'][number]
+
+const Nominal: React.FC<{ content: ScaleContentMember }> = ({ content }) => {
+  const [radios, setRadios] = React.useState<ReturnType<typeof createRadios>>([])
 
   React.useEffect(() => {
+    setRadios(createRadios(content.options))
+  }, [content])
 
-  }, [scale])
+  function createRadios(options: ScaleContentMember['options']) {
+    return options.map((text, key) => ({
+      key,
+      text,
+      checked: false,
+    }))
+  }
 
   return (
-    <div>
       <FormControl>
-        <div className="mb-[8px] p-[8px] text-[1.5rem] leading-normal">{title}</div>
+        <div className="mb-[8px] p-[8px] text-[1.5rem] leading-normal">{content.title}</div>
         <RadioGroup>
-          {options.map((item, index) => (
+        {
+          radios.map(item => (
             <FormControlLabel
-              key={index}
+              key={item.key}
               control={
-                <Radio checked={item.checked} onChange={() => handleChange(index)} />
+                <Radio checked={item.checked} />
               }
               label={item.text}
             />
-          ))}
+          ))
+        }
         </RadioGroup>
       </FormControl>
-        <footer className="mt-[20px] w-[80%] flex justify-around">
-          <Button
-            onClick={() => onPrev()}
-            disabled={page <= 0}
-            variant="contained"
-          >
-            上一题
-          </Button>
-          {page < forms.length - 1
-            ? (
-            <Button onClick={() => onNext()} variant="contained">下一题</Button>
-              )
-            : (
-            <Button onClick={() => onSubmit()} variant="contained">提交</Button>
-              )}
-        </footer>
-      </div>
   )
 }
 
