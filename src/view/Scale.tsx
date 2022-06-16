@@ -1,14 +1,20 @@
 import * as React from 'react'
-import { useLocation } from 'react-router-dom'
-import { Paper } from '@mui/material'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { Dialog, DialogActions, DialogContent, DialogTitle, Fab, Paper } from '@mui/material'
 import Button from '@mui/material/Button'
+import { Home } from '@mui/icons-material'
 import { useToasts } from '../components/Toast'
 import type { ScaleForm } from '../components/Scales/types'
 import Nominal from '../components/Scales/NominalScale'
 import Ordinal from '../components/Scales/OrdinalScale'
+import FloatComponent from '../components/FloatComponent'
 
 const Scale: React.FC = () => {
   const toast = useToasts()
+
+  const navigate = useNavigate()
+  const [dialogVisible, setDialogVisible] = React.useState(false)
+
   const location = useLocation()
   const { form } = location.state as { form: ScaleForm }
 
@@ -50,8 +56,31 @@ const Scale: React.FC = () => {
     toast.success('success')
   }
 
+  function goHome() {
+    navigate('/', { replace: true })
+  }
+
   return (
     <>
+      <FloatComponent>
+        <Fab color="primary" onClick={() => setDialogVisible(true)}>
+          <Home />
+        </Fab>
+      </FloatComponent>
+      <Dialog
+        open={dialogVisible}
+      >
+        <DialogTitle>
+          放弃答题?
+        </DialogTitle>
+        <DialogContent>
+          答题结果不会被保存
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogVisible(false)}>取消</Button>
+          <Button onClick={() => goHome()} color="error">确认</Button>
+        </DialogActions>
+      </Dialog>
       <Paper className="p-[16px] mx-[16px] flex flex-col justify-center items-center">
          <Content />
         <footer className="mt-[20px] w-[80%] flex justify-around">
