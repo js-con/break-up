@@ -20,9 +20,12 @@ const Ordinal: React.FC<{
 
   React.useLayoutEffect(() => {
     setTitle(content.title)
+  }, [content])
+
+  React.useLayoutEffect(() => {
     setValue(checked ?? config.defaultDegree - 1)
     setMarks(createMarks(config))
-  }, [content, config])
+  }, [config])
 
   function createMarks(config: ScaleConfig) {
     return new Array(config.degree).fill({}).map((_, idx) => {
@@ -59,4 +62,4 @@ const Ordinal: React.FC<{
   )
 }
 
-export default Ordinal
+export default React.memo(Ordinal)

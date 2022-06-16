@@ -16,7 +16,7 @@ const Scale: React.FC = () => {
   const [curPage, setCurPage] = React.useState<any>(form.content[pageNo])
   const [ans, setAns] = React.useState(new Array(form.content.length).fill(undefined))
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     setCurPage(form.content[pageNo])
   }, [form, pageNo])
 
@@ -25,7 +25,7 @@ const Scale: React.FC = () => {
       case 'nominal':
         return <Nominal content={curPage} checked={ans[pageNo]} handleChange={handleChange}/>
       case 'ordinal':
-        return <Ordinal content={curPage}/>
+        return <Ordinal content={curPage} config={form.config} checked={ans[pageNo]} handleChange={handleChange}/>
     }
   }
 
