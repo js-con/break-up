@@ -11,9 +11,14 @@ export interface NominalScale {
 
 export interface OrdinalScale {
   type: 'ordinal'
+  config: {
+    degree: number
+    defaultDegree: number
+    leftText: string
+    rightText: string
+  }
   content: {
     title: string
-    degrees: string[]
   }[]
 }
 

@@ -2,87 +2,39 @@ import type { ScaleForm } from '../../src/components/Scales/types'
 
 export const socialMedia: ScaleForm = {
   type: 'ordinal',
+  config: {
+    degree: 5,
+    defaultDegree: 3,
+    leftText: '不同意',
+    rightText: '同意',
+  },
   content: [
     {
       title: 'What\'s your opinion on the new Facebook?',
-      degrees: [
-        'I\'m not sure',
-        'I don\'t like it',
-        'I like it',
-        'I don\'t care',
-      ],
     },
     {
       title: 'What\'s your opinion on the new Twitter?',
-      degrees: [
-        'I\'m not sure',
-        'I don\'t like it',
-        'I like it',
-        'I don\'t care',
-      ],
     },
     {
       title: 'What\'s your opinion on the new Instagram?',
-      degrees: [
-        'I\'m not sure',
-        'I don\'t like it',
-        'I like it',
-        'I don\'t care',
-      ],
     },
     {
       title: 'What\'s your opinion on the new Snapchat?',
-      degrees: [
-        'I\'m not sure',
-        'I don\'t like it',
-        'I like it',
-        'I don\'t care',
-      ],
     },
     {
       title: 'What\'s your opinion on the new Pinterest?',
-      degrees: [
-        'I\'m not sure',
-        'I don\'t like it',
-        'I like it',
-        'I don\'t care',
-      ],
     },
     {
       title: 'What\'s your opinion on the new Tumblr?',
-      degrees: [
-        'I\'m not sure',
-        'I don\'t like it',
-        'I like it',
-        'I don\'t care',
-      ],
     },
     {
       title: 'What\'s your opinion on the new Reddit?',
-      degrees: [
-        'I\'m not sure',
-        'I don\'t like it',
-        'I like it',
-        'I don\'t care',
-      ],
     },
     {
       title: 'What\'s your opinion on the new LinkedIn?',
-      degrees: [
-        'I\'m not sure',
-        'I don\'t like it',
-        'I like it',
-        'I don\'t care',
-      ],
     },
     {
       title: 'What\'s your opinion on the new Tumblr?',
-      degrees: [
-        'I\'m not sure',
-        'I don\'t like it',
-        'I like it',
-        'I don\'t care',
-      ],
     },
   ],
 }
