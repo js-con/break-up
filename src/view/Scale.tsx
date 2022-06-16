@@ -52,7 +52,7 @@ const Scale: React.FC = () => {
 
   return (
     <>
-      <Paper className="p-[16px] w-[80%] flex flex-col justify-center items-center">
+      <Paper className="p-[16px] mx-[16px] flex flex-col justify-center items-center">
          <Content />
         <footer className="mt-[20px] w-[80%] flex justify-around">
           <Button

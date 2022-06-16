@@ -54,6 +54,7 @@ const Ordinal: React.FC<{
           value={value}
           step={1}
           marks={marks}
+          track={false}
           min={0}
           max={marks.length - 1}
           onChange={(_, val) => handleChange(val)}
