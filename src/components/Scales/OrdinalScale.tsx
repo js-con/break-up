@@ -48,18 +48,18 @@ const Ordinal: React.FC<{
   }
 
   return (
-      <FormControl>
-        <div className="mb-[8px] p-[8px] text-[1.5rem] leading-normal">{title}</div>
-        <Slider
-          value={value}
-          step={1}
-          marks={marks}
-          track={false}
-          min={0}
-          max={marks.length - 1}
-          onChange={(_, val) => handleChange(val)}
-        />
-      </FormControl>
+    <FormControl className="w-[100%]">
+      <div className="mb-[8px] p-[8px] w-[100%] text-[1rem] leading-normal">{title}</div>
+      <Slider
+        value={value}
+        step={1}
+        marks={marks}
+        track={false}
+        min={0}
+        max={marks.length - 1}
+        onChange={(_, val) => handleChange(val)}
+      />
+    </FormControl>
   )
 }
 
