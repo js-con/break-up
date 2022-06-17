@@ -26,14 +26,14 @@ const Scale: React.FC = () => {
     setCurPage(form.content[pageNo])
   }, [form, pageNo])
 
-  function Content() {
+  const Content = React.useCallback(() => {
     switch (form.type) {
       case 'nominal':
         return <Nominal content={curPage} checked={ans[pageNo]} handleChange={handleChange}/>
       case 'ordinal':
         return <Ordinal content={curPage} config={form.config} checked={ans[pageNo]} handleChange={handleChange}/>
     }
-  }
+  }, [form, curPage, pageNo, ans])
 
   function handleChange(key: number) {
     const newAns = ans.map((item, index) => {
