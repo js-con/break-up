@@ -8,12 +8,40 @@ import type { ScaleForm } from '../components/Scales/types'
 import Nominal from '../components/Scales/NominalScale'
 import Ordinal from '../components/Scales/OrdinalScale'
 import FloatComponent from '../components/FloatComponent'
+import { AESdecrypt, AESencrypt } from '../shared/utils'
+
+const SharedDialog: React.FC<{ visible: boolean; sharedLink: string }> = ({ visible, sharedLink }) => {
+  const toast = useToasts()
+  const handleClick = () => {
+    navigator.clipboard.writeText(sharedLink)
+    toast.success('链接已复制')
+  }
+  return (
+    <Dialog open={visible} className="w-[100%]">
+      <DialogTitle>
+        分享
+      </DialogTitle>
+      <DialogContent>
+        <div className="mb-[16px]">
+          <p>复制链接然后发送给好友</p>
+          <p>好友答完题后会生成一个比对结果页</p>
+          <p>可以通过它查看你们每道题的差异</p>
+          <div className="mt-[8px] p-[8px] break-words bg-dark-400 rounded-sm">{sharedLink}</div>
+        </div>
+        <footer className="text-center">
+        <Button variant="contained" onClick={() => handleClick()}>点击复制</Button>
+        </footer>
+      </DialogContent>
+    </Dialog>
+  )
+}
 
 const Scale: React.FC = () => {
-  const toast = useToasts()
-
   const navigate = useNavigate()
   const [dialogVisible, setDialogVisible] = React.useState(false)
+
+  const [sharedDialogVisible, setSharedDialogVisible] = React.useState(false)
+  const [sharedLink, setSharedLink] = React.useState('')
 
   const location = useLocation()
   const { form } = location.state as { form: ScaleForm }
@@ -53,7 +81,10 @@ const Scale: React.FC = () => {
   }
 
   function onSubmit() {
-    toast.success('success')
+    const answer = encodeURIComponent(AESencrypt(ans.join(',')))
+    const url = `${window.location.href}?answer=${answer}`
+    setSharedLink(url)
+    setSharedDialogVisible(true)
   }
 
   function goHome() {
@@ -67,9 +98,8 @@ const Scale: React.FC = () => {
           <Home />
         </Fab>
       </FloatComponent>
-      <Dialog
-        open={dialogVisible}
-      >
+
+      <Dialog open={dialogVisible}>
         <DialogTitle>
           放弃答题?
         </DialogTitle>
@@ -81,7 +111,10 @@ const Scale: React.FC = () => {
           <Button onClick={() => goHome()} color="error">确认</Button>
         </DialogActions>
       </Dialog>
-      <Paper className="p-[16px] mx-[16px] flex flex-col justify-center items-center">
+
+      <SharedDialog visible={sharedDialogVisible} sharedLink={sharedLink}/>
+
+      <Paper className="p-[16px] w-[86%] flex flex-col justify-center items-center">
          <Content />
         <footer className="mt-[20px] w-[80%] flex justify-around">
           <Button
