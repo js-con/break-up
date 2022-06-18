@@ -1,15 +1,14 @@
 import * as React from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { Dialog, DialogActions, DialogContent, DialogTitle, Fab, Paper } from '@mui/material'
 import Button from '@mui/material/Button'
-import { Home } from '@mui/icons-material'
 import { breakUp } from 'static/scales/breakUp'
 import { useToasts } from '../components/Toast'
 import type { ScaleForm } from '../components/Scales/types'
 import Nominal from '../components/Scales/NominalScale'
 import Ordinal from '../components/Scales/OrdinalScale'
-import FloatComponent from '../components/FloatComponent'
 import { AESdecrypt, AESencrypt } from '../shared/utils'
+import HomePager from '../components/HomePager'
 
 const SharedDialog: React.FC<{ visible: boolean; sharedLink: string }> = ({ visible, sharedLink }) => {
   const toast = useToasts()
@@ -37,7 +36,7 @@ const SharedDialog: React.FC<{ visible: boolean; sharedLink: string }> = ({ visi
   )
 }
 
-const InviteDialog: React.FC<{ visible: boolean; handleClose: Function }> = ({ visible }) => {
+const InviteDialog: React.FC<{ visible: boolean; handleClose: Function }> = ({ visible, handleClose }) => {
   return (
     <Dialog open={visible} className="w-[100%]">
       <DialogTitle>
@@ -50,21 +49,19 @@ const InviteDialog: React.FC<{ visible: boolean; handleClose: Function }> = ({ v
         </div>
       </DialogContent>
       <DialogActions>
-        <Button></Button>
+        <Button onClick={() => handleClose()}>开始答题</Button>
       </DialogActions>
     </Dialog>
   )
 }
 
 const Scale: React.FC = () => {
-  const navigate = useNavigate()
-  const [dialogVisible, setDialogVisible] = React.useState(false)
-
-  const [inviteDialogVisible, setInviteDialogVisible] = React.useState(true)
+  const [inviteDialogVisible, setInviteDialogVisible] = React.useState(false)
   const [sharedDialogVisible, setSharedDialogVisible] = React.useState(false)
   const [sharedLink, setSharedLink] = React.useState('')
 
   const location = useLocation()
+  const [opponentAns, setOpponentAns] = React.useState<number[]>([])
   const { form = breakUp } = location.state as { form: ScaleForm } || {}
 
   const [pageNo, setPageNo] = React.useState(0)
@@ -72,8 +69,10 @@ const Scale: React.FC = () => {
   const [ans, setAns] = React.useState(new Array(form.content.length).fill(undefined))
 
   React.useEffect(() => {
-    console.log(location)
-    console.log(window.location)
+    const params = new URLSearchParams(location.search)
+    const answer = params.get('answer')
+    if (answer)
+      setOpponentAns(AESdecrypt(answer).split(',').map(item => Number(item)))
   }, [])
 
   React.useLayoutEffect(() => {
@@ -107,36 +106,19 @@ const Scale: React.FC = () => {
   }
 
   function onSubmit() {
+    if (opponentAns) {
+      // goto result page
+      return
+    }
     const answer = encodeURIComponent(AESencrypt(ans.join(',')))
     const url = `${window.location.href}?answer=${answer}`
     setSharedLink(url)
     setSharedDialogVisible(true)
   }
 
-  function goHome() {
-    navigate('/', { replace: true })
-  }
-
   return (
     <>
-      <FloatComponent>
-        <Fab color="primary" onClick={() => setDialogVisible(true)}>
-          <Home />
-        </Fab>
-      </FloatComponent>
-
-      <Dialog open={dialogVisible}>
-        <DialogTitle>
-          放弃答题?
-        </DialogTitle>
-        <DialogContent>
-          答题结果不会被保存
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDialogVisible(false)}>取消</Button>
-          <Button onClick={() => goHome()} color="error">确认</Button>
-        </DialogActions>
-      </Dialog>
+      <HomePager title="放弃答题？" content="答题结果不会被保存"/>
 
       <SharedDialog visible={sharedDialogVisible} sharedLink={sharedLink}/>
 
