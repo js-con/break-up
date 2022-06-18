@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Dialog, DialogActions, DialogContent, DialogTitle, Fab, Paper } from '@mui/material'
 import Button from '@mui/material/Button'
 import { Home } from '@mui/icons-material'
+import { breakUp } from 'static/scales/breakUp'
 import { useToasts } from '../components/Toast'
 import type { ScaleForm } from '../components/Scales/types'
 import Nominal from '../components/Scales/NominalScale'
@@ -25,7 +26,7 @@ const SharedDialog: React.FC<{ visible: boolean; sharedLink: string }> = ({ visi
         <div className="mb-[16px]">
           <p>复制链接然后发送给好友</p>
           <p>好友答完题后会生成一个比对结果页</p>
-          <p>可以通过它查看你们每道题的差异</p>
+          <p>可以通过它查看你们每道题答案的差异</p>
           <div className="mt-[8px] p-[8px] break-words bg-dark-400 rounded-sm">{sharedLink}</div>
         </div>
         <footer className="text-center">
@@ -36,19 +37,44 @@ const SharedDialog: React.FC<{ visible: boolean; sharedLink: string }> = ({ visi
   )
 }
 
+const InviteDialog: React.FC<{ visible: boolean; handleClose: Function }> = ({ visible }) => {
+  return (
+    <Dialog open={visible} className="w-[100%]">
+      <DialogTitle>
+        分享
+      </DialogTitle>
+      <DialogContent>
+        <div>
+          <p>好友邀请你来完成这套三观测试题</p>
+          <p>答题完成后,可以查看你和好友答案的对比</p>
+        </div>
+      </DialogContent>
+      <DialogActions>
+        <Button></Button>
+      </DialogActions>
+    </Dialog>
+  )
+}
+
 const Scale: React.FC = () => {
   const navigate = useNavigate()
   const [dialogVisible, setDialogVisible] = React.useState(false)
 
+  const [inviteDialogVisible, setInviteDialogVisible] = React.useState(true)
   const [sharedDialogVisible, setSharedDialogVisible] = React.useState(false)
   const [sharedLink, setSharedLink] = React.useState('')
 
   const location = useLocation()
-  const { form } = location.state as { form: ScaleForm }
+  const { form = breakUp } = location.state as { form: ScaleForm } || {}
 
   const [pageNo, setPageNo] = React.useState(0)
   const [curPage, setCurPage] = React.useState<any>(form.content[pageNo])
   const [ans, setAns] = React.useState(new Array(form.content.length).fill(undefined))
+
+  React.useEffect(() => {
+    console.log(location)
+    console.log(window.location)
+  }, [])
 
   React.useLayoutEffect(() => {
     setCurPage(form.content[pageNo])
@@ -113,6 +139,8 @@ const Scale: React.FC = () => {
       </Dialog>
 
       <SharedDialog visible={sharedDialogVisible} sharedLink={sharedLink}/>
+
+      <InviteDialog visible={inviteDialogVisible} handleClose={() => setInviteDialogVisible(false)}/>
 
       <Paper className="p-[16px] w-[86%] flex flex-col justify-center items-center">
          <Content />
