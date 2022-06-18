@@ -1,5 +1,5 @@
 import { Card, List, ListItem, ListItemText } from '@mui/material'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Navigate, Route, Routes } from 'react-router-dom'
 import scales from 'static/scales'
 import Scale from './Scale'
 
@@ -7,7 +7,8 @@ function App() {
   return (
     <div className="h-screen w-screen flex justify-center items-center text-center">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Navigate to="/scale" />}></Route>
+        <Route path="/home" element={<Home />} />
         <Route path="/scale" element={<Scale />}></Route>
       </Routes>
     </div>
