@@ -12,6 +12,12 @@ code {
     monospace;
 }
 
+#root{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .MuiSlider-markLabel{
   font-size: 12px !important;
 }

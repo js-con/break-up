@@ -3,7 +3,7 @@ import router from '../routes'
 
 function App() {
   return (
-    <div className="my-[24px] w-screen flex justify-center items-center text-center">
+    <div className="w-screen h-screen flex justify-center items-center text-center overflow-auto">
       <Routes>
       {
         router.map((r, i) => (
