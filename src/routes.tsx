@@ -1,12 +1,12 @@
 import { Navigate } from 'react-router-dom'
-import { Home } from '@mui/icons-material'
+import Home from './view/Home'
 import Scale from './view/Scale'
 import Result from './view/Result'
 
 export default [
   {
     path: '/',
-    element: <Navigate to="/scale"/>,
+    element: <Navigate to="/home"/>,
   },
   {
     path: '/scale',
