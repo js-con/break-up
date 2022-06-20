@@ -61,7 +61,7 @@ const Scale: React.FC = () => {
   const [sharedLink, setSharedLink] = React.useState('')
 
   const location = useLocation()
-  const [opponentAns, setOpponentAns] = React.useState<number[]>([])
+  const [opponentAns, setOpponentAns] = React.useState<number[]>(null)
   const { form = breakUp } = location.state as { form: ScaleForm } || {}
 
   const [pageNo, setPageNo] = React.useState(0)
@@ -86,7 +86,7 @@ const Scale: React.FC = () => {
       case 'ordinal':
         return <Ordinal content={curPage} config={form.config} checked={ans[pageNo]} handleChange={handleChange}/>
     }
-  }, [form, curPage, pageNo, ans])
+  }, [form, curPage, pageNo])
 
   function handleChange(key: number) {
     const newAns = ans.map((item, index) => {

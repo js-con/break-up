@@ -8,12 +8,34 @@ interface Mark {
   value: number
   label?: string
 }
-const Ordinal: React.FC<{
+interface Props {
   content: ScaleContentMember
   config: ScaleConfig
   checked: number
   handleChange: Function
-}> = ({ content, config, checked, handleChange }) => {
+}
+
+function createMarks(config: ScaleConfig) {
+  return new Array(config.degree).fill({}).map((_, idx) => {
+    if (idx === 0) {
+      return {
+        value: idx,
+        label: config.leftText,
+      }
+    }
+    if (idx === config.degree - 1) {
+      return {
+        value: idx,
+        label: config.rightText,
+      }
+    }
+    return {
+      value: idx,
+    }
+  })
+}
+
+const Ordinal: React.FC<Props> = ({ content, config, checked, handleChange }) => {
   const [title, setTitle] = React.useState('')
   const [marks, setMarks] = React.useState<Mark[]>([])
   const [value, setValue] = React.useState(0)
@@ -23,32 +45,22 @@ const Ordinal: React.FC<{
   }, [content])
 
   React.useLayoutEffect(() => {
-    setValue(checked ?? config.defaultDegree - 1)
+    // if not checked , set default value and pass it to handleChange(ans)
+    if (checked) { setValue(checked) }
+    else {
+      setValue(config.defaultDegree - 1)
+      handleChange(config.defaultDegree - 1)
+    }
     setMarks(createMarks(config))
   }, [config])
 
-  function createMarks(config: ScaleConfig) {
-    return new Array(config.degree).fill({}).map((_, idx) => {
-      if (idx === 0) {
-        return {
-          value: idx,
-          label: config.leftText,
-        }
-      }
-      if (idx === config.degree - 1) {
-        return {
-          value: idx,
-          label: config.rightText,
-        }
-      }
-      return {
-        value: idx,
-      }
-    })
+  const onChange = (_: Event, newValue: number | number[]) => {
+    setValue(newValue as number)
+    handleChange(newValue)
   }
 
   return (
-    <FormControl className="w-[100%]">
+    <div className="w-[100%]">
       <div className="mb-[8px] p-[8px] w-[100%] text-[1rem] leading-normal">{title}</div>
       <Slider
         value={value}
@@ -57,9 +69,9 @@ const Ordinal: React.FC<{
         track={false}
         min={0}
         max={marks.length - 1}
-        onChange={(_, val) => handleChange(val)}
+        onChange={onChange}
       />
-    </FormControl>
+    </div>
   )
 }
 
