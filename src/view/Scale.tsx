@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Dialog, DialogActions, DialogContent, DialogTitle, Paper } from '@mui/material'
 import Button from '@mui/material/Button'
 import { breakUp } from 'static/scales/breakUp'
@@ -61,6 +61,7 @@ const Scale: React.FC = () => {
   const [sharedLink, setSharedLink] = React.useState('')
 
   const location = useLocation()
+  const navigate = useNavigate()
   const [opponentAns, setOpponentAns] = React.useState<number[] | null>(null)
   const { form = breakUp } = location.state as { form: ScaleForm } || {}
 
@@ -71,8 +72,10 @@ const Scale: React.FC = () => {
   React.useEffect(() => {
     const params = new URLSearchParams(location.search)
     const answer = params.get('answer')
-    if (answer)
+    if (answer) {
       setOpponentAns(AESdecrypt(answer).split(',').map(item => Number(item)))
+      setInviteDialogVisible(true)
+    }
   }, [])
 
   React.useLayoutEffect(() => {
@@ -107,7 +110,13 @@ const Scale: React.FC = () => {
 
   function onSubmit() {
     if (opponentAns) {
-      // goto result page
+      navigate('/result', {
+        state: {
+          scale: form,
+          ans,
+          opponentAns,
+        },
+      })
       return
     }
     const answer = encodeURIComponent(AESencrypt(ans.join(',')))
