@@ -1,6 +1,13 @@
 import * as React from 'react'
+import type { ScaleForm } from '../components/Scales/types'
 
-const Result: React.FC = () => {
+interface Props {
+  ans: number[]
+  opponentAns: number[]
+  scale: ScaleForm
+}
+
+const Result: React.FC<Props> = ({ ans, opponentAns, scale }) => {
   return (
     <div></div>
   )
