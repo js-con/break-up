@@ -50,7 +50,7 @@ const Ordinal: React.FC<Props> = ({ content, config, checked, handleChange }) =>
 
   return (
     <div className="w-[100%]">
-      <div className="mb-[8px] p-[8px] w-[100%] text-[1rem] leading-normal">{title}</div>
+      <div className="mb-[8px] p-[8px] w-[100%] text-center text-[1rem] leading-normal">{title}</div>
       <Slider
         value={value}
         step={1}

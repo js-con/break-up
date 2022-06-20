@@ -83,7 +83,7 @@ const Result: React.FC = () => {
   }, [])
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="mt-[24px] flex flex-col justify-center items-center">
       {
         results.map((result, idx) => (
           <Paper key={idx} className="mb-[24px] p-[12px] w-[80%] min-h-[125px]">
