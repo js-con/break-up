@@ -8,6 +8,13 @@ interface Props {
   scale: ScaleForm
 }
 
+type Results = {
+  title: string
+  ansText: string
+  opponentAnsText: string
+  distance: 'equal' | 'close' | 'far'
+}[]
+
 function getNominalAnswers(scale: NominalScale, ans: number[]) {
   const result = scale.content.map((item, idx) => {
     const resNo = ans[idx]
@@ -27,44 +34,46 @@ function getOrdinalAnswers(scale: OrdinalScale, ans: number[]) {
   return result
 }
 
+function calculateDistance(ans1: number, ans2: number, total: number): Results[number]['distance'] {
+  if (ans1 === ans2)
+    return 'equal'
+
+  if (Math.abs(ans1 - ans2) <= (total / 3))
+    return 'close'
+
+  return 'far'
+}
+
 const Result: React.FC = () => {
   const location = useLocation()
   const { ans, opponentAns, scale } = location.state as Props || {}
 
-  const [titles, setTitles] = React.useState<string[]>([])
-  const [ansText, setAnsText] = React.useState<string[]>([])
-  const [opponentAnsText, setOpponentAnsText] = React.useState<string[]>([])
+  const [results, setResults] = React.useState<Results>([])
 
   React.useEffect(() => {
-    setTitles(scale.content.map(i => i.title))
+    const titles = scale.content.map(i => i.title)
+    let ansText: string[]
+    let opponentAnsText: string[]
     if (scale.type === 'nominal') {
-      setAnsText(getNominalAnswers(scale, ans))
-      setOpponentAnsText(getNominalAnswers(scale, opponentAns))
+      ansText = getNominalAnswers(scale, ans)
+      opponentAnsText = getNominalAnswers(scale, opponentAns)
     }
     else if (scale.type === 'ordinal') {
-      setAnsText(getOrdinalAnswers(scale, ans))
-      setOpponentAnsText(getOrdinalAnswers(scale, opponentAns))
+      ansText = getOrdinalAnswers(scale, ans)
+      opponentAnsText = getOrdinalAnswers(scale, opponentAns)
     }
+    setResults(ans.map((ans, idx) => {
+      return {
+        title: titles[idx],
+        ansText: ansText[idx],
+        opponentAnsText: opponentAnsText[idx],
+        distance: calculateDistance(ans, opponentAns[idx], scale.content.length),
+      }
+    }))
   }, [])
 
   return (
-    <ul>
-      {
-        ansText.map((ans, index) => (
-          <li key={index}>
-            <div>
-              题目:{titles[index]}
-            </div>
-            <div>
-              你的答案:{ans}
-            </div>
-            <div>
-              伙伴的答案:{opponentAnsText[index]}
-            </div>
-          </li>
-        ))
-      }
-    </ul>
+    <div></div>
   )
 }
 
