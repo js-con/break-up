@@ -3,10 +3,8 @@ import type { ScaleForm } from '../../src/components/Scales/types'
 export const breakUp: ScaleForm = {
   type: 'ordinal',
   config: {
-    degree: 5,
+    degree: ['完全不同意', '有些不同意', '中立', '有些同意', '完全同意'],
     defaultDegree: 3,
-    leftText: '完全不同意',
-    rightText: '非常同意',
   },
   content: [
     {

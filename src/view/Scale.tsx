@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useLocation } from 'react-router-dom'
-import { Dialog, DialogActions, DialogContent, DialogTitle, Fab, Paper } from '@mui/material'
+import { Dialog, DialogActions, DialogContent, DialogTitle, Paper } from '@mui/material'
 import Button from '@mui/material/Button'
 import { breakUp } from 'static/scales/breakUp'
 import { useToasts } from '../components/Toast'
@@ -61,7 +61,7 @@ const Scale: React.FC = () => {
   const [sharedLink, setSharedLink] = React.useState('')
 
   const location = useLocation()
-  const [opponentAns, setOpponentAns] = React.useState<number[]>(null)
+  const [opponentAns, setOpponentAns] = React.useState<number[] | null>(null)
   const { form = breakUp } = location.state as { form: ScaleForm } || {}
 
   const [pageNo, setPageNo] = React.useState(0)

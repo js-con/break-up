@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { FormControl, Slider } from '@mui/material'
+import { Slider } from '@mui/material'
 import type { OrdinalScale } from './types'
 
 type ScaleContentMember = OrdinalScale['content'][number]
@@ -16,20 +16,9 @@ interface Props {
 }
 
 function createMarks(config: ScaleConfig) {
-  return new Array(config.degree).fill({}).map((_, idx) => {
-    if (idx === 0) {
-      return {
-        value: idx,
-        label: config.leftText,
-      }
-    }
-    if (idx === config.degree - 1) {
-      return {
-        value: idx,
-        label: config.rightText,
-      }
-    }
+  return config.degree.map((label, idx) => {
     return {
+      label,
       value: idx,
     }
   })
