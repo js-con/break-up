@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import scales from 'static/scales'
 function Home() {
   return (
-      <div>
+      <div className="h-[100%] flex flex-col justify-center items-center">
         <h1 className="text-[2.23rem]">欢迎使用break up!</h1>
         <h2 className="my-[20px] text-[1.5rem]">请选择问题集</h2>
-        <List>
+        <List className="w-[80%]">
           {scales.map((s, i) => (
             <ListItem key={i}>
               <Card className="w-[100%]">
