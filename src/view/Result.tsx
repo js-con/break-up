@@ -1,6 +1,7 @@
 import { Button, Paper } from '@mui/material'
 import * as React from 'react'
 import { useLocation } from 'react-router-dom'
+import HomePager from '../components/HomePager'
 import type { NominalScale, OrdinalScale, ScaleForm } from '../components/Scales/types'
 
 interface Props {
@@ -114,6 +115,7 @@ const Result: React.FC = () => {
           </Paper>
         ))
       }
+      <HomePager title="返回首页" content="离开该页面?"/>
     </div>
   )
 }
