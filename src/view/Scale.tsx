@@ -126,7 +126,7 @@ const Scale: React.FC = () => {
   }
 
   return (
-    <>
+    <div className="h-[100%] flex flex-col justify-center items-center">
       <HomePager title="放弃答题？" content="答题结果不会被保存"/>
 
       <SharedDialog visible={sharedDialogVisible} sharedLink={sharedLink}/>
@@ -152,7 +152,7 @@ const Scale: React.FC = () => {
               )}
         </footer>
       </Paper>
-    </>
+    </div>
   )
 }
 
